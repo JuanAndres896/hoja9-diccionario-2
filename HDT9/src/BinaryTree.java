@@ -7,14 +7,18 @@
 */
 public class BinaryTree<E,T>
 {
-    protected E val; // value associated with node
+    protected E key; // value associated with node
+    protected T val;
     protected BinaryTree<E,T> parent; // parent of node
     protected BinaryTree<E,T> left, right; // children of node
     
-    public BinaryTree(){
-        
+    public BinaryTree(E llave, T value, BinaryTree<E,T> left, BinaryTree<E,T> right, BinaryTree<E,T> parent){
+        key = llave;
+        val=value;
+        this.left=left;
+        this.right=right;
+        this.parent=parent;
     }
-    
     public BinaryTree<E,T> left()
     // post: returns reference to (possibly empty) left subtree
     // post: returns reference to (possibly empty) left subtree
@@ -46,14 +50,26 @@ public class BinaryTree<E,T>
     public void setParent(BinaryTree<E,T> newParent){
         this.left=newParent;
     }
+   
+     public E key()
+	// post: returns value associated with this node
+	{
+		return key;
+	}
     
-    public E value()
+    public T value()
 	// post: returns value associated with this node
 	{
 		return val;
 	}
 	
-	public void setValue(E value)
+    
+    public void setKey(E llave)
+	// post: sets the value associated with this node
+	{
+		key = llave;
+	}
+	public void setValue(T value)
 	// post: sets the value associated with this node
 	{
 		val = value;

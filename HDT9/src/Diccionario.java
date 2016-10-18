@@ -9,7 +9,7 @@ import java.util.HashMap;
 * Algoritmos y Estructuras de Datos - Seccion 31
 * Juan Andres Garcia - 15046
 * Rodrigo Barrios - 15009
-* Guatemala, septiembre 27 de 2016
+* Guatemala, octubre 17 de 2016
 */
 public class Diccionario {
         File archivo = null;
@@ -41,6 +41,7 @@ public class Diccionario {
             }
         int implementacion = Integer.valueOf(op);
         raiz = fabrica.setMap(implementacion);
+        ArrayList<Association<String,String> >asociaciones= new ArrayList<Association<String,String>>();
         try {
            //Se crea un archivo tipo file que representa al diccionario
            //en la siguiente linea hay que ingresar la dirección completa del archivo de diccionario
@@ -74,17 +75,17 @@ public class Diccionario {
                String ingles=palabras.get(i).substring(1,lugar);
                String espaniol=palabras.get(i).substring(lugar+1,palabras.get(i).length()-1);
                //se van agregando las acsociaciones
-               raiz.insert(new Association(ingles, espaniol));
+               raiz.put(new Association(ingles, espaniol),null);
         }
         
-        raiz.setValue(asociaciones.get(0));
+        raiz.put(asociaciones.get(0),null);
         for (int i=1; i<asociaciones.size(); i++){
             insertarNodo(raiz, asociaciones.get(i));
             
         }
      }
     
-     public void insertarNodo(SplayTree<Association<String,String>,String> padre, Association<String,String> dato)
+     public void insertarNodo(HashMap<Association,String> padre, Association<String,String> dato)
     {
         Association<String,String> asociacion=padre.value();
         String llavePadre=asociacion.getKey();

@@ -67,7 +67,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends HashMap<Key
         return get(key) != null;
     }
 
-    public Value put(Key key, Value val) {
+    public Value insert(Key key, Value val) {
         if (key == null) throw new NullPointerException("first argument to put() is null");
         if (val == null) {
             delete(key);
