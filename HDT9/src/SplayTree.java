@@ -18,9 +18,9 @@ public class SplayTree<T extends Comparable<T>,K> extends HashMap<T,K> {
 
 	private BinaryNode root;
 	private final BinaryNode aux;
-        protected E val; // value associated with node
-        protected SplayTree<E,T> parent; // parent of node
-        protected SplayTree<E,T> left, right; // children of node
+        protected K val; // value associated with node
+        protected SplayTree<T,K> parent; // parent of node
+        protected SplayTree<T,K> left, right; // children of node
 
 	public SplayTree() {
 		root = null;
@@ -137,13 +137,13 @@ public class SplayTree<T extends Comparable<T>,K> extends HashMap<T,K> {
 		return root == null;
 	}
         
-        public void setLeft(SplayTree<E,T> newLeft){
-        this.left=newLeft;
-    }
+        public void setLeft(SplayTree<T,K> newLeft){
+            left=newLeft;
+        }
     
-    public void setRight(SplayTree<E,T> newRight){
-        this.right=newRight;
-    }
+        public void setRight(SplayTree<T,K> newRight){
+            right=newRight;
+        }
 	/* (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
 	 */
