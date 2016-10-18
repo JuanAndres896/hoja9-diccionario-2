@@ -1,8 +1,9 @@
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.HashMap;
 
-public class TwoThreeTree <K extends Comparable<K>, V> extends BinaryTree{
+public class TwoThreeTree <K extends Comparable<K>, V> extends HashMap<K,V>{
 	
 	private Node root;
 	private int nodeCount = 0;
@@ -63,7 +64,7 @@ public class TwoThreeTree <K extends Comparable<K>, V> extends BinaryTree{
 	 * @param key The key to insert.
 	 * @param value The value associated with the key. Can not be null.
 	 */
-	public void put(K key, V value)
+	public V put(K key, V value)
 	{
 		//Null values are not supported, cause then get will not work properly.
 		//Assume we store a null value and then get will return that null value. The calling
@@ -78,7 +79,7 @@ public class TwoThreeTree <K extends Comparable<K>, V> extends BinaryTree{
 		{
 			root = new Node(new KeyValuePair(key, value));
 			nodeCount = 1; //We need to add 1 to our size variable, we have not done a split, but we have one node now.
-			return;
+			return value;
 		}
 		
 		//Find the node we should add the key/value to.
@@ -107,12 +108,12 @@ public class TwoThreeTree <K extends Comparable<K>, V> extends BinaryTree{
 			if (foundNode.keyvalues1.key.equals(key))
 			{
 				foundNode.keyvalues1.value = value;
-				return;
+				return value;
 			}
 			if (foundNode.keyvalues2.key.equals(key))
 			{
 				foundNode.keyvalues2.value = value;
-				return;
+				return value;
 			}
 			
 			FourNode tempFourNode = null;
@@ -132,6 +133,7 @@ public class TwoThreeTree <K extends Comparable<K>, V> extends BinaryTree{
 			//Insert this FourNode into the tree.
 			put4NodeInTree(foundNode, tempFourNode);
 		}
+            return value;
 	}
 
 	/**

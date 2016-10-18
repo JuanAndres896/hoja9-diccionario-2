@@ -1,7 +1,8 @@
 import java.util.NoSuchElementException;
+import java.util.HashMap;
 
 
-public class RedBlackBST<Key extends Comparable<Key>, Value> extends BinaryTree {
+public class RedBlackBST<Key extends Comparable<Key>, Value> extends HashMap<Key,Value> {
 
     private static final boolean RED   = true;
     private static final boolean BLACK = false;
@@ -25,6 +26,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends BinaryTree 
     }
 
     public RedBlackBST() {
+        
     }
 
  
@@ -65,16 +67,17 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> extends BinaryTree 
         return get(key) != null;
     }
 
-    public void put(Key key, Value val) {
+    public Value put(Key key, Value val) {
         if (key == null) throw new NullPointerException("first argument to put() is null");
         if (val == null) {
             delete(key);
-            return;
+            return val;
         }
 
         root = put(root, key, val);
         root.color = BLACK;
         // assert check();
+        return val;
     }
 
     private Node put(Node h, Key key, Value val) { 
