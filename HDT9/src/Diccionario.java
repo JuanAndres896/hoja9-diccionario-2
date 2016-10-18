@@ -77,7 +77,7 @@ public class Diccionario {
         }
      }
     
-     public void insertarNodo(BinaryTree<Association<String,String>> padre, Association<String,String> dato)
+     public void insertarNodo(SplayTree<Association<String,String>> padre, Association<String,String> dato)
     {
         Association<String,String> asociacion=padre.value();
         String llavePadre=asociacion.getKey();
@@ -86,14 +86,14 @@ public class Diccionario {
         int num=llavePadre.compareToIgnoreCase(llaveDato);
         //Si la palabra padre es mayor a la de dato, se inserta a la izquierda
         if(num>0 && padre.left()==null){
-            padre.setLeft(new BinaryTree<Association<String,String>>(null, null, null,null));
+            padre.setLeft(new SplayTree<Association<String,String>>(null, null, null,null));
             padre.left().setValue(dato);
         }else if(padre.left()!=null){
             insertarNodo(padre.left(),dato);
         }
         //Si la palabra padre es menor a la de dato, se inserta a la derecha
         if(num<0 && padre.right()==null){
-            padre.setRight(new BinaryTree<Association<String,String>>(null, null, null,null));
+            padre.setRight(new SplayTree<Association<String,String>>(null, null, null,null));
             padre.right().setValue(dato);
         }else if(padre.right()!=null){
             //si ya habia un nodo a la izquierda, se inserta el nuevo a la derecha
@@ -101,7 +101,7 @@ public class Diccionario {
         }
     }
     //Este metodo recorre el arbol in-order e imprimer todos sus nodos
-    public void imprimirArbol(BinaryTree<Association<String,String>> arbol){
+    public void imprimirArbol(SplayTree<Association<String,String>> arbol){
         if(arbol.left() != null){
             imprimirArbol(arbol.left());
             System.out.println(arbol.left().value().getKey()+",");
@@ -112,7 +112,7 @@ public class Diccionario {
         }
         System.out.println(arbol.value().getKey()+",");
     }
-    public String traducirPalabra(BinaryTree<Association<String,String>> parent, String palabra){
+    public String traducirPalabra(SplayTree<Association<String,String>> parent, String palabra){
         String palabraTraducida = "";
         Association<String,String> asociacion = parent.value();
         String parentKey = asociacion.getKey();
