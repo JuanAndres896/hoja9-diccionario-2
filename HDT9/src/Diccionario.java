@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.HashMap;
 /*
 * Universidad del Valle de Guatemala
 * Algoritmos y Estructuras de Datos - Seccion 31
@@ -13,16 +14,14 @@ import java.util.Scanner;
 public class Diccionario {
         File archivo = null;
         FileReader fr = null;
+        Factory fabrica = new Factory();
         BufferedReader br = null;
-        BinaryTree raiz;
+        HashMap<Association,String> raiz;
         ArrayList <String> oracion = new ArrayList<String>();
         Scanner teclado = new Scanner(System.in);       
         
     
     public Diccionario(){
-        //Se inserta una raiz con valores null para inicializar el arbol
-        
-        raiz=new BinaryTree<String,String>();
         //Se realizan los metodos para obtener todas las palabras del diccionario y traducir el archivo texto.txt
         llenarDiccionario();
         System.out.println("A continuacion se muestran las palabras del diccionario:");
@@ -32,8 +31,16 @@ public class Diccionario {
     
     public void llenarDiccionario(){
         ArrayList<String> palabras= new ArrayList<String>();
-        //Se crea una lista de asociaciones (se creo una clase association aparte)
-        ArrayList<Association<String,String> >asociaciones= new ArrayList<Association<String,String>>();
+        //Se crea una lista de asociaciones (se creo una clase association aparte):
+        System.out.println("Bienvenido al traductor. Ingrese la implementacion que desea usar:\n\n"
+                + "1) SplayTree\n2) RedBlackTree\n 3) Mapeo por Hash");
+        String op = teclado.nextLine();
+        while (!op.equals("1") && !op.equals("2") && !op.equals("3")){ //programacion defensiva
+                System.out.println("Error, ingrese como opcion 1, 2 o 3: ");
+                op = teclado.nextLine();
+            }
+        int implementacion = Integer.valueOf(op);
+        raiz = fabrica.setMap(implementacion);
         try {
            //Se crea un archivo tipo file que representa al diccionario
            //en la siguiente linea hay que ingresar la dirección completa del archivo de diccionario
@@ -63,11 +70,11 @@ public class Diccionario {
         //Se recorre la lista de palabras
         for(int i=0; i<palabras.size()-1;i++){
             //se obtiene el indice de la coma para separar la palabra en espanol e ingles
-               int lugar=palabras.get(i).indexOf(',');
+               int lugar=palabras.get(i).indexOf(' ');
                String ingles=palabras.get(i).substring(1,lugar);
                String espaniol=palabras.get(i).substring(lugar+1,palabras.get(i).length()-1);
                //se van agregando las acsociaciones
-               asociaciones.add(new Association(ingles, espaniol));
+               raiz.insert(new Association(ingles, espaniol));
         }
         
         raiz.setValue(asociaciones.get(0));
@@ -77,7 +84,7 @@ public class Diccionario {
         }
      }
     
-     public void insertarNodo(SplayTree<Association<String,String>> padre, Association<String,String> dato)
+     public void insertarNodo(SplayTree<Association<String,String>,String> padre, Association<String,String> dato)
     {
         Association<String,String> asociacion=padre.value();
         String llavePadre=asociacion.getKey();
@@ -86,7 +93,7 @@ public class Diccionario {
         int num=llavePadre.compareToIgnoreCase(llaveDato);
         //Si la palabra padre es mayor a la de dato, se inserta a la izquierda
         if(num>0 && padre.left()==null){
-            padre.setLeft(new SplayTree<Association<String,String>>(null, null, null,null));
+            padre.setLeft(new SplayTree<Association<String,String>>());
             padre.left().setValue(dato);
         }else if(padre.left()!=null){
             insertarNodo(padre.left(),dato);
